@@ -1,0 +1,9 @@
+<h1>Update my profile!</h1>
+
+<%= form_for @user do |f| %>
+  <%= f.text_field :email, placeholder: "email address" %>
+  <%= f.text_field :fname, placeholder: "first name" %>
+  <%= f.text_field :lname, placeholder: "last name" %>
+  <%= f.password_field :password, placeholder: "password" %>
+  <%= f.submit "Submit!" %>
+<% end %>
