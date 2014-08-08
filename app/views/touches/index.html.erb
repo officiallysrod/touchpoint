@@ -1,0 +1,11 @@
+<h1><%= @contact.fname %> <%= @contact.lname %>'s Touchpoints</h1>
+
+<ul>
+  <% @touches.each do |t| %>
+    <li><%= t.due_date %></li>
+    <ul>
+      <li><%= t.type %></li>
+      <li><%= link_to "Delete this touchpoint", contact_touch_path(@contact.id, t.id), method: :delete %></li>
+    </ul>
+  <% end %>
+</ul>

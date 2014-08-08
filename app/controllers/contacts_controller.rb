@@ -10,7 +10,6 @@ class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
-    @is_signup = true
   end
 
   def create

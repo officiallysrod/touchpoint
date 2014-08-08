@@ -1,0 +1,7 @@
+<h1>Edit this touchpoint for <%= @contact.fname %> <%= @contact.lname %>!</h1>
+
+<%= form_for [@contact, @touch] do |f| %>
+  <%= f.text_field :type, placeholder: "touchpoint type" %>
+  <%= f.date_field :due_date, placeholder: "due date" %>
+  <%= f.submit "Submit!" %>
+<% end %>

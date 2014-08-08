@@ -1,6 +1,8 @@
 <h1>My Contacts</h1>
 
-<% @contacts.each do |c| %>
-  <%= c.fname %> <%= c.lname %>
-  <%= link_to "Edit this contact", edit_contact_path(c) if c.user == current_user %>
-<% end %>
+<ul>
+  <% @contacts.each do |c| %>
+    <li><%= c.fname %> <%= c.lname %>
+    <%= link_to "Edit this contact", edit_contact_path(c) if c.user == current_user %></li>
+  <% end %>
+</ul>
