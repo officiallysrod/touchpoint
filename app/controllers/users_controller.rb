@@ -1,7 +1,18 @@
 class UsersController < ApplicationController
   
+  before_action :verify_user, only: [:edit, :update, :destroy]
+
   def show
     @user = User.find(params[:id])
+    @contacts = @user.contacts.all
+    @touches = Touch.all
+    if @user == current_user
+      @user
+    elsif current_user
+      redirect_to contacts_path
+    else
+      redirect_to new_session_path
+    end
   end
 
   def new
@@ -37,4 +48,13 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to root_path
   end
+
+  private
+
+    def verify_user
+      @user = User.find(params[:id])
+      unless @user == current_user
+        redirect_to user_path
+      end
+    end
 end

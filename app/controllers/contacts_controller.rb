@@ -1,15 +1,38 @@
 class ContactsController < ApplicationController
   
+  before_action :verify_user, only: [:create, :edit, :update, :destroy]
+
   def index
     @contacts = Contact.all
+    if current_user
+      Contact.each do |c|
+        if c.user != current_user
+          @contacts = @contacts.drop(1)
+        end
+      @contacts
+      end
+    else
+      redirect_to new_session_path
+    end
   end
 
   def show
     @contact = Contact.find(params[:id])
+    if @contact.user == current_user
+      @contact
+    elsif current_user
+      redirect_to contacts_path
+    else
+      redirect_to new_session_path
+    end
   end
 
   def new
-    @contact = Contact.new
+    if current_user
+      @contact = Contact.new
+    else
+      redirect_to new_session_path
+    end
   end
 
   def create
@@ -40,4 +63,13 @@ class ContactsController < ApplicationController
     @contact.destroy
     redirect_to contacts_path
   end
+
+  private
+
+    def verify_user
+      @contact = Contact.find(params[:id])
+      unless @contact.user == current_user
+        redirect_to contacts_path
+      end
+    end
 end

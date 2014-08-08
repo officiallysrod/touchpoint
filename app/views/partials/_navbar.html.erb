@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>touchPOINT</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <nav>
+<nav>
   <% if current_user %>
     Welcome, <%= current_user.fname %>!
       <ul>
@@ -18,8 +9,3 @@
     </ul>
   <% end %>
 </nav>
-
-  <%= yield %>
-
-</body>
-</html>

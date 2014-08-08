@@ -1,2 +1,16 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>Here's Your Daily Dashboard</h1>
+
+<ul>
+  <% @contacts.each do |c| %>
+    <li><%= c.fname %> <%= c.lname %></li>
+    <ul>
+      <% @touches.each do |t| %>
+        <li><%= t.type %></li>
+        <ul>
+          <li><%= t.due_date %></li>
+          <li><%= t.complete? %></li>
+        </ul>
+      <% end %>
+    </ul>
+  <% end %>
+</ul>

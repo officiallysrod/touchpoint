@@ -1,5 +1,8 @@
 class TouchesController < ApplicationController
   
+  before_action :verify_user, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+
   def index
     @contact = Contact.find(params[:contact_id])
     @touches = Touch.all
@@ -48,4 +51,14 @@ class TouchesController < ApplicationController
     @touch.destroy
     redirect_to contact_touches_path
   end
+
+  private
+
+    def verify_user
+      @contact = Contact.find(params[:contact_id])
+      unless @contact.user == current_user
+        redirect_to contacts_path
+      end
+    end
+
 end
