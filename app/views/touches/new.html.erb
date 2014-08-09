@@ -1,7 +1,10 @@
 <h1>Create a new touchpoint for <%= @contact.fname %> <%= @contact.lname %>!</h1>
 
 <%= form_for [@contact, @touch] do |f| %>
-  <%= f.text_field :type, placeholder: "touchpoint type" %>
+  <%= f.text_field :description, placeholder: "description" %>
+  <%= f.select :type, options_for_select(["Anniversary", "Birthday", "Monthly Touch", "Solicitation", "Other"]) %>
   <%= f.date_field :due_date, placeholder: "due date" %>
+  <%= f.select :recurrence, options_for_select(["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"]) %>
+  <%= f.text_field :notes, placeholder: "notes" %>
   <%= f.submit "Submit!" %>
 <% end %>

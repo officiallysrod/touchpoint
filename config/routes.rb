@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
   
-  resources :users
+  resources :users, only: [:show, :new, :create, :edit, :update] do
+    resources :touches
+  end
+
   resources :contacts do
     resources :touches
   end

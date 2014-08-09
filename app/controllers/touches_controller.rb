@@ -15,13 +15,15 @@ class TouchesController < ApplicationController
 
   def new
     @contact = Contact.find(params[:contact_id])
+    @user = current_user
     @touch = Touch.new
   end
 
   def create
     @contact = Contact.find(params[:contact_id])
-    touch = Touch.new(params.require(:touch).permit(:type, :due_date, :complete?))
+    touch = Touch.new(params.require(:touch).permit(:description, :type, :due_date, :recurrence, :notes, :complete?))
     touch.contact = @contact
+    touch.user = current_user
 
     if touch.save
       redirect_to contact_touches_path(@contact.id)

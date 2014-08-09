@@ -9,4 +9,5 @@ class User
   has_secure_password
 
   has_many :contacts
+  has_many :touches
 end

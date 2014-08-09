@@ -16,3 +16,16 @@
     </ul>
   </ul>
 <% end %>
+
+<% @touches.each do |touch| %>
+  <ul>
+    <li><%= touch.description %></li>
+    <ul>
+      <li><%= touch.contact.fname %></li>
+      <li><%= touch.due_date.strftime("%B%e") %></li>
+      <li><%= touch.recurrence %></li>
+    </ul>
+  </ul>
+<% end %>
+
+<%= link_to "Create a new touchPOINT", new_user_touch_path(current_user.id) %>
