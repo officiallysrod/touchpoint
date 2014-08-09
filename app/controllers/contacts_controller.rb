@@ -1,16 +1,10 @@
 class ContactsController < ApplicationController
   
-  before_action :verify_user, only: [:create, :edit, :update, :destroy]
+  before_action :verify_user, only: [:edit, :update, :destroy]
 
   def index
-    @contacts = Contact.all
     if current_user
-      Contact.each do |c|
-        if c.user != current_user
-          @contacts = @contacts.drop(1)
-        end
-      @contacts
-      end
+      @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
     else
       redirect_to new_session_path
     end

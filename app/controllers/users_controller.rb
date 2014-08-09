@@ -5,11 +5,12 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @contacts = @user.contacts.all
-    @touches = @user.touches.all
+    @touches = @user.touches.all.sort_by!{|t| t.due_date}
+
     if @user == current_user
       @user
     elsif current_user
-      redirect_to contacts_path
+      redirect_to user_path(current_user.id)
     else
       redirect_to new_session_path
     end

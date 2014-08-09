@@ -1,31 +1,18 @@
-<h1>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B%e, %Y") %></h1>
-
-<% @contacts.each do |contact| %>
-  <ul>
-    <li><%= contact.fname %> <%= contact.lname %> <%= contact.id %></li>
-    <ul>
-      <% @touches.each do |t| %>
-        <% if t.contact == contact && t.due_date.cweek <= Date.today.cweek %>
-        <li><%= t.type %></li>
-        <ul>
-          <li><%= t.due_date.strftime("%B%e") %></li>
-          <li><%= "Not complete" if !t.complete? %></li>
-        </ul>
-        <% end %>
-      <% end %>
-    </ul>
-  </ul>
-<% end %>
+<h1>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B%e") %> - <%= Time.now.end_of_week.strftime("%e, %Y") %></h1>
 
 <% @touches.each do |touch| %>
-  <ul>
-    <li><%= touch.description %></li>
+  <% if touch.due_date.year <= Date.today.year && touch.due_date.cweek <= Date.today.cweek %>
     <ul>
-      <li><%= touch.contact.fname %></li>
-      <li><%= touch.due_date.strftime("%B%e") %></li>
-      <li><%= touch.recurrence %></li>
+      <li><%= touch.description %></li>
+      <ul>
+        <li><%= touch.contact_id %></li>
+        <li><%= touch.due_date.strftime("%B %e, %Y") %></li>
+        <li><%= touch.recurrence %></li>
+        <li><%= touch.id %></li>
+      </ul>
     </ul>
-  </ul>
+  <% end %>
 <% end %>
 
-<%= link_to "Create a new touchPOINT", new_user_touch_path(current_user.id) %>
+<%= link_to "Add a new touchPOINT", new_user_touch_path(current_user.id) %>
+<%= link_to "Add a new contact", new_contact_path %>

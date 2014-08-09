@@ -7,9 +7,17 @@ class Contact
   field :home_phone, type: String
   field :mobile_phone, type: String
   field :address, type: String
-  field :twitter, type: String
   field :giving_level, type: String
 
   belongs_to :user
   has_many :touches
+
+  def full_name
+    "#{fname} #{lname}"
+  end
+
+  def lname_fname
+    "#{lname}, #{fname}"
+  end
+
 end
