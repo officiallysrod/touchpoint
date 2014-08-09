@@ -11,4 +11,5 @@ class Contact
   field :giving_level, type: String
 
   belongs_to :user
+  has_many :touches
 end

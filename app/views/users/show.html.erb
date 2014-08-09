@@ -1,16 +1,18 @@
-<h1>Here's Your Daily Dashboard</h1>
+<h1>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B%e, %Y") %></h1>
 
-<ul>
-  <% @contacts.each do |c| %>
-    <li><%= c.fname %> <%= c.lname %></li>
+<% @contacts.each do |contact| %>
+  <ul>
+    <li><%= contact.fname %> <%= contact.lname %> <%= contact.id %></li>
     <ul>
       <% @touches.each do |t| %>
+        <% if t.contact == contact && t.due_date.cweek <= Date.today.cweek %>
         <li><%= t.type %></li>
         <ul>
-          <li><%= t.due_date %></li>
-          <li><%= t.complete? %></li>
+          <li><%= t.due_date.strftime("%B%e") %></li>
+          <li><%= "Not complete" if !t.complete? %></li>
         </ul>
+        <% end %>
       <% end %>
     </ul>
-  <% end %>
-</ul>
+  </ul>
+<% end %>
