@@ -16,6 +16,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def test
+    # @user = User.find(params[:id])
+    @user = current_user
+    @contacts = @user.contacts.all
+    @touches = @user.touches.all.sort_by!{|t| t.due_date}
+
+    render json: @contacts
+  end
+
   def new
     @user = User.new
     @is_signup = true

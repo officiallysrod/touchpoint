@@ -7,7 +7,7 @@ class Touch
   field :notes, type: String
   field :complete?, type: Mongoid::Boolean, default: false
 
-  belongs_to :contact
   belongs_to :user
-
+  belongs_to :contact
+  
 end

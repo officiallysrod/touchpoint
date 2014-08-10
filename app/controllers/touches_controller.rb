@@ -1,11 +1,11 @@
 class TouchesController < ApplicationController
   
-  before_action :verify_user, only: [:index, :show, :edit, :update, :destroy]
+  # before_action :verify_user, only: [:index, :show, :edit, :update, :destroy]
 
 
   def index
     @contact = Contact.find(params[:contact_id])
-    @touches = Touch.all
+    @touches = current_user.Touch.all
   end
 
   def show
@@ -35,14 +35,17 @@ class TouchesController < ApplicationController
 
   def edit
     @user = current_user
-    @touch = Touch.find(params[:id])
+    @touch = Touch.where(params[:id])
     @contact = @touch.contact
   end
 
   def update
     @touch = Touch.find(params[:id])
     if @touch.update_attributes(params.require(:touch).permit(:type, :due_date, :complete?))
-      redirect_to contact_touches_path
+      if @touch.complete? == true
+        @touch.repeat
+      end
+      redirect_to user_path(current_user.id)
     else
       render 'edit'
     end
@@ -53,6 +56,30 @@ class TouchesController < ApplicationController
     @touch = Touch.find(params[:id])
     @touch.destroy
     redirect_to contact_touches_path
+  end
+
+  def repeat
+    @touch = Touch.where(params[:id])
+
+    case @touch.recurrence
+    when "Never"
+      @touch.destroy
+    when "Every Day"
+      @touch.due_date = Date.today + 1.day
+      @touch.update_attributes
+    when "Every Week"
+      @touch.due_date += 1.week
+      @touch.update_attributes
+    when "Every 2 Weeks"
+      @touch.due_date += 2.weeks
+      @touch.update_attributes
+    when "Every Month"
+      @touch.due_date += 1.month
+      @touch.update_attributes
+    when "Every Year"
+      @touch.due_date += 1.year
+      @touch.update_attributes
+    end
   end
 
   private
