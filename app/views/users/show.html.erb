@@ -3,13 +3,16 @@
 
   <% @touches.each do |touch| %>
     <% if touch.due_date.year <= Date.today.year && touch.due_date.cweek <= Date.today.cweek %>
-        <strong><%= touch.description %></strong><br>
+        <strong><%= touch.contact.full_name %></strong> <%= link_to "view contact", contact_path(touch.contact_id) %><br>
+        <%= touch.description %><br>
         Contact ID: <%= touch.contact_id %><br>
         Due Date: <%= touch.due_date.strftime("%B %e, %Y") %><br>
         Recurs: <%= touch.recurrence if touch.recurrence %><br>
         Complete? <%= touch.complete? %><br>
         Touch ID: <%= touch.id %><br>
-        <%= link_to "Edit this touchPOINT", edit_user_touch_path(current_user.id, touch.id) %><br><br>
+        <%= link_to "Edit this touchPOINT", edit_user_touch_path(current_user.id, touch.id) %>
+        <%= link_to "Delete this touchPOINT", user_touch_path(current_user.id, touch.id), method: :delete, data: {confirm: "Are you sure you want to delete this touchPOINT?"} %>
+        <br><br>
     <% end %>
   <% end %>
 

@@ -1,7 +1,7 @@
 class Touch
   include Mongoid::Document
   field :description, type: String
-  field :type, type: String
+  field :kind, type: String
   field :due_date, type: Date
   field :recurrence, type: String
   field :notes, type: String
@@ -9,5 +9,5 @@ class Touch
 
   belongs_to :user
   belongs_to :contact
-  
+
 end

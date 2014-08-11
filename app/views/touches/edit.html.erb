@@ -1,8 +1,7 @@
-<h1>Edit this touchpoint for <%= @touch.contact.fname %> <%= @touch.contact.lname %>!</h1>
+<h1>Edit this touchpoint for <%= @touch.contact.full_name %></h1>
 
 <%= form_for [@user, @touch] do |f| %>
-  <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Choose a contact" %>
-  <%= f.select :type, options_for_select(["Anniversary", "Birthday", "Solicitation", "Other"]), prompt: "Type" %>
+  <%= f.select :kind, options_for_select(["Anniversary", "Birthday", "Solicitation", "Other"]), prompt: "Kind" %>
   <%= f.text_field :description, placeholder: "description" %>
   <%= f.date_field :due_date, placeholder: "due date" %>
   <%= f.select :recurrence, options_for_select(["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"]), prompt: "Repeats?" %>

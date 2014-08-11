@@ -34,20 +34,21 @@ class UsersController < ApplicationController
     @user = User.new(params.require(:user).permit(:fname, :lname, :email, :password, :password_confirmation))
     
     if @user.save
-      redirect_to new_user_path
+      session[:user_id] = @user.id.to_s
+      redirect_to user_path(@user.id)
     else
       render 'new'
     end
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.where(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.where(params[:id])
     if @user.update_attributes(params.require(:user).permit(:fname, :lname, :email))
-      redirect_to new_user_path
+      redirect_to user_path
     else
       render 'edit'
     end

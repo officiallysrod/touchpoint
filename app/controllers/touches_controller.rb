@@ -5,7 +5,7 @@ class TouchesController < ApplicationController
 
   def index
     @contact = Contact.find(params[:contact_id])
-    @touches = current_user.Touch.all
+    @touches = @contact.touches.all
   end
 
   def show
@@ -23,10 +23,11 @@ class TouchesController < ApplicationController
   end
 
   def create
-    touch = Touch.new(params.require(:touch).permit(:contact, :description, :type, :due_date, :recurrence, :notes, :complete?))
-    touch.user = current_user
-
-    if touch.save
+    @user = current_user
+    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :kind, :due_date, :recurrence, :notes, :complete?))
+    @touch.user = current_user
+    
+    if @touch.save
       redirect_to user_path(current_user.id)
     else
       render 'new'
@@ -35,13 +36,15 @@ class TouchesController < ApplicationController
 
   def edit
     @user = current_user
-    @touch = Touch.where(params[:id])
+    @touch = @user.touches.where(:_id => params[:id]).first
     @contact = @touch.contact
+    @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
+    # @contact = Contact.where(params[:id])
   end
 
   def update
-    @touch = Touch.find(params[:id])
-    if @touch.update_attributes(params.require(:touch).permit(:type, :due_date, :complete?))
+    @touch = Touch.where(params[:id])
+    if @touch.update_attributes(params.require(:touch).permit(:kind, :due_date, :complete?))
       if @touch.complete? == true
         @touch.repeat
       end
@@ -52,35 +55,36 @@ class TouchesController < ApplicationController
   end
 
   def destroy
-    @contact = Contact.find(params[:contact_id])
+    @user = current_user
+    # @contact = Contact.find(params[:contact_id])
     @touch = Touch.find(params[:id])
     @touch.destroy
-    redirect_to contact_touches_path
+    redirect_to user_path(current_user.id)
   end
 
-  def repeat
-    @touch = Touch.where(params[:id])
+  # def repeat
+  #   @touch = Touch.where(params[:id])
 
-    case @touch.recurrence
-    when "Never"
-      @touch.destroy
-    when "Every Day"
-      @touch.due_date = Date.today + 1.day
-      @touch.update_attributes
-    when "Every Week"
-      @touch.due_date += 1.week
-      @touch.update_attributes
-    when "Every 2 Weeks"
-      @touch.due_date += 2.weeks
-      @touch.update_attributes
-    when "Every Month"
-      @touch.due_date += 1.month
-      @touch.update_attributes
-    when "Every Year"
-      @touch.due_date += 1.year
-      @touch.update_attributes
-    end
-  end
+  #   case @touch.recurrence
+  #   when "Never"
+  #     @touch.destroy
+  #   when "Every Day"
+  #     @touch.due_date = Date.today + 1.day
+  #     @touch.update_attributes
+  #   when "Every Week"
+  #     @touch.due_date += 1.week
+  #     @touch.update_attributes
+  #   when "Every 2 Weeks"
+  #     @touch.due_date += 2.weeks
+  #     @touch.update_attributes
+  #   when "Every Month"
+  #     @touch.due_date += 1.month
+  #     @touch.update_attributes
+  #   when "Every Year"
+  #     @touch.due_date += 1.year
+  #     @touch.update_attributes
+  #   end
+  # end
 
   private
 

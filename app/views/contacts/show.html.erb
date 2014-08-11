@@ -1,6 +1,11 @@
-<h1><%= @contact.fname %> <%= @contact.lname %></h1>
+<h1><%= @contact.full_name %></h1>
 <p>Spouse: <%= @contact.spouse %></p>
 <p>Email: <%= @contact.email %></p>
-<p>Twitter Handle: <%= @contact.twitter %></p>
 <p>Giving Level: <%= @contact.giving_level %></p>
+<% @contact.touches.each do |touch| %>
+  <ul>
+    <li><%= touch.description %></li>
+    <li><%= touch.contact.full_name %></li>
+  </ul>
+<% end %>
 <%= link_to "Delete this contact", :contact, method: :delete %>
