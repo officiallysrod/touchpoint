@@ -43,11 +43,12 @@ class TouchesController < ApplicationController
   end
 
   def update
-    @touch = Touch.where(params[:id])
-    if @touch.update_attributes(params.require(:touch).permit(:kind, :due_date, :complete?))
-      if @touch.complete? == true
-        @touch.repeat
-      end
+    @user = current_user
+    @touch = @user.touches.where(:_id => params[:id]).first
+    if @touch.update_attributes(params.require(:touch).permit(:kind, :recurrence, :due_date, :complete?))
+      # if @touch.complete? == true
+      #   @touch.repeat
+      # end
       redirect_to user_path(current_user.id)
     else
       render 'edit'

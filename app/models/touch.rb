@@ -1,5 +1,6 @@
 class Touch
   include Mongoid::Document
+  include Mongoid::ForceBoolean
   field :description, type: String
   field :kind, type: String
   field :due_date, type: Date

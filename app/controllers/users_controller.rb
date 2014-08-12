@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @contacts = @user.contacts.all
-    @touches = @user.touches.all.sort_by!{|t| t.due_date}
 
     if @user == current_user
       @user
@@ -14,6 +13,18 @@ class UsersController < ApplicationController
     else
       redirect_to new_session_path
     end
+
+    def dashboard_touches
+      @touches = []
+      @user.touches.each do |t|
+        unless t.complete?
+          @touches.push(t) if t.due_date <= Date.today.end_of_week
+        end
+      end
+      @touches.sort_by!{|t| t.due_date}
+    end
+
+    dashboard_touches
   end
 
   def test
