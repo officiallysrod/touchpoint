@@ -39,16 +39,13 @@ class TouchesController < ApplicationController
     @touch = @user.touches.where(_id: params[:id]).first
     @contact = @touch.contact
     @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
-    # @contact = Contact.where(params[:id])
   end
 
   def update
     @user = current_user
     @touch = @user.touches.where(_id: params[:id]).first
     if @touch.update_attributes(params.require(:touch).permit(:kind, :recurrence, :due_date, :is_complete))
-      # if @touch.complete? == true
-      #   @touch.repeat
-      # end
+      @touch.make_copy if @touch.is_complete
       redirect_to user_path(current_user.id)
     else
       render 'edit'
@@ -62,30 +59,6 @@ class TouchesController < ApplicationController
     @touch.destroy
     redirect_to user_path(current_user.id)
   end
-
-  # def repeat
-  #   @touch = Touch.where(params[:id])
-
-  #   case @touch.recurrence
-  #   when "Never"
-  #     @touch.destroy
-  #   when "Every Day"
-  #     @touch.due_date = Date.today + 1.day
-  #     @touch.update_attributes
-  #   when "Every Week"
-  #     @touch.due_date += 1.week
-  #     @touch.update_attributes
-  #   when "Every 2 Weeks"
-  #     @touch.due_date += 2.weeks
-  #     @touch.update_attributes
-  #   when "Every Month"
-  #     @touch.due_date += 1.month
-  #     @touch.update_attributes
-  #   when "Every Year"
-  #     @touch.due_date += 1.year
-  #     @touch.update_attributes
-  #   end
-  # end
 
   private
 

@@ -16,10 +16,17 @@ class Touch
     new_touch.kind = self.kind
     new_touch.recurrence = self.recurrence
     new_touch.notes = self.notes
+    new_touch.user_id = self.user_id
+    new_touch.contact_id = self.contact_id
 
-    case new_touch.recurrence
+
+    case self.recurrence
     when "Every Day"
-      new_touch.due_date = Date.today + 1.day
+      if self.due_date <= Date.today
+        new_touch.due_date = Date.today + 1.day
+      elsif self.due_date > Date.today
+        new_touch.due_date = self.due_date + 1.day
+      end
     when "Every Week"
       new_touch.due_date = self.due_date + 1.week
     when "Every 2 Weeks"

@@ -1,13 +1,16 @@
 <h1>Edit this touchpoint for <%= @touch.contact.full_name %></h1>
 
 <%= form_for [@user, @touch] do |f| %>
-  <%= f.select :kind, options_for_select(["Anniversary", "Birthday", "Solicitation", "Other"]), prompt: "Kind" %>
+  <%= f.label "Type:" %>
+  <%= f.select :kind, ["Anniversary", "Birthday", "Solicitation", "Other"] %>
+  <%= f.label "Description:" %>
   <%= f.text_field :description, placeholder: "description" %>
+  <%= f.label "Due Date:" %>
   <%= f.date_field :due_date, placeholder: "due date" %>
-  <%= f.select :recurrence, options_for_select(["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"]), prompt: "Repeats?" %>
+  <%= f.label "Repeats?" %>
+  <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"] %>
   <%= f.text_field :notes, placeholder: "notes" %>
   <%= f.label "Done?" %>
   <%= f.check_box :is_complete %>
-
-  <%= f.submit "Submit!" %>
+  <%= f.submit "Update!" %>
 <% end %>

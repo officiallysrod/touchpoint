@@ -20,10 +20,3 @@
 
   <%= link_to "Add a new touchPOINT", new_user_touch_path(current_user.id) %>
   <%= link_to "Add a new contact", new_contact_path %>
-
-  <div ng-click="dashboard()">
-    <p>Contacts</p>
-    <p ng-repeat="contact in dash_data">{{ dash_data }}</p>
-  </div>
-
-</div>
