@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     def dashboard_touches
       @touches = []
       @user.touches.each do |t|
-        unless t.complete?
+        unless t.is_complete
           @touches.push(t) if t.due_date <= Date.today.end_of_week
         end
       end

@@ -24,7 +24,7 @@ class TouchesController < ApplicationController
 
   def create
     @user = current_user
-    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :kind, :due_date, :recurrence, :notes, :complete?))
+    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :kind, :due_date, :recurrence, :notes, :is_complete))
     @touch.user = current_user
     
     if @touch.save
@@ -36,7 +36,7 @@ class TouchesController < ApplicationController
 
   def edit
     @user = current_user
-    @touch = @user.touches.where(:_id => params[:id]).first
+    @touch = @user.touches.where(_id: params[:id]).first
     @contact = @touch.contact
     @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
     # @contact = Contact.where(params[:id])
@@ -44,8 +44,8 @@ class TouchesController < ApplicationController
 
   def update
     @user = current_user
-    @touch = @user.touches.where(:_id => params[:id]).first
-    if @touch.update_attributes(params.require(:touch).permit(:kind, :recurrence, :due_date, :complete?))
+    @touch = @user.touches.where(_id: params[:id]).first
+    if @touch.update_attributes(params.require(:touch).permit(:kind, :recurrence, :due_date, :is_complete))
       # if @touch.complete? == true
       #   @touch.repeat
       # end

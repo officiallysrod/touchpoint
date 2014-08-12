@@ -10,7 +10,7 @@
         Type: <%= touch.kind %><br>
         Due Date: <%= touch.due_date.strftime("%B %e, %Y") %><br>
         Repeats: <%= touch.recurrence if touch.recurrence %><br>
-        Complete? <%= touch.complete? %><br>
+        Complete? <%= touch.is_complete %><br>
         Touch ID: <%= touch.id %><br>
         <%= link_to "Edit this touchPOINT", edit_user_touch_path(current_user.id, touch.id) %>
         <%= link_to "Delete this touchPOINT", user_touch_path(current_user.id, touch.id), method: :delete, data: {confirm: "Are you sure you want to delete this touchPOINT?"} %>
