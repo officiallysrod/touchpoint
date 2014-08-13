@@ -1,8 +1,6 @@
 <h1>Edit this touchpoint for <%= @touch.contact.full_name %></h1>
 
 <%= form_for [@user, @touch] do |f| %>
-  <%= f.label "Type:" %>
-  <%= f.select :kind, ["Anniversary", "Birthday", "Solicitation", "Other"] %>
   <%= f.label "Description:" %>
   <%= f.text_field :description, placeholder: "description" %>
   <%= f.label "Due Date:" %>

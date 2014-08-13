@@ -5,8 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.1'
 # Use for MongoDB
 gem 'mongoid', github: 'mongoid/mongoid'
-#gem to force Mongoid Boolean
-# gem 'mongoid-force_boolean', require: 'force_boolean'
+#gem for Bootstrap
+gem 'bootstrap-sass', '~> 3.2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets

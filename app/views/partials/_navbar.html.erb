@@ -1,11 +1,73 @@
-  <nav>
-    <% if current_user %>
-      <%= link_to "My Dashboard", user_path(current_user.id) %>
-      Welcome, <%= current_user.fname %>!
-      (id: <%= current_user.id %>)
-        <%= link_to "Log out", session_path, method: :delete %>
-      <%else %>
-        <%= link_to "Sign up", new_user_path if !@is_signup %>
-        <%= link_to "Log in", new_session_path if !@is_login %>
-    <% end %>
-  </nav>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="/">
+        touchPOINT
+      </a>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+        <li>
+          <% if current_user %>
+            <%= link_to "My Dashboard", user_path(current_user.id) %>
+          <% end %>  
+        </li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <% if current_user %>
+          
+          <li class="dropdown">
+            
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Hi, <%= current_user.fname.capitalize %>!
+              <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <%= link_to 'Sign me out', session_path, method: :delete %>
+              </li>
+            </ul>
+
+          </li>
+
+        <% else %>
+          
+           <li class="dropdown">
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Please sign in
+              <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <%= link_to "Sign up", new_user_path %>
+              </li>
+              <li>
+                <%= link_to 'Sign in', new_session_path  %>   
+              </li>
+            </ul>
+
+          </li>
+        <% end %>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

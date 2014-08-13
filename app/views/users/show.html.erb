@@ -1,4 +1,4 @@
-<div ng-controller="dashboardCtrl">
+<div>
   <h1>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B%e") %> - <%= Time.now.end_of_week.strftime("%e, %Y") %></h1>
 
   <% @touches.each do |touch| %>
@@ -7,7 +7,6 @@
         <%= touch.description %><br>
         Contact ID: <%= touch.contact_id %><br>
         User ID: <%= touch.user_id %><br>
-        Type: <%= touch.kind %><br>
         Due Date: <%= touch.due_date.strftime("%B %e, %Y") %><br>
         Repeats: <%= touch.recurrence if touch.recurrence %><br>
         Complete? <%= touch.is_complete %><br>
