@@ -1,26 +1,93 @@
 <div class="container">
-  
-    <div class="row">
+  <div class="row">
       
-      <div class="col-sm-8 offset col-sm-offset-2">
-        <h1 id="date_num"><%=Date.today.day%></h1>
-        <h3>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h3>
-      </div>
-
+    <div class="col-sm-8 offset col-sm-offset-2">
+      <h1 id="date_num"><%=Date.today.day%></h1>
+      <h3>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h3>
     </div>
+
+  </div>
       
     <div class="row">
       
       <div class="table-responsive col-sm-8 col-sm-offset-2">
-        <table class="table table-striped">
-          <tr><th>Due Date</th><th>Contact</th><th>Description</th></tr>
-          <% @touches.each do |touch| %>
-            <tr>
-              <td><%= touch.due_date.strftime("%B %e") %></td>
-              <td><%= link_to touch.contact.full_name, contact_path(touch.contact_id) %></td>
-              <td><%= touch.description %></td>
-            </tr>
-          <% end %>
+        <table class="table table-hover">
+          <tr><th></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
+            <% @touches.each do |touch| %>
+
+              <% if touch.due_date < Date.today %>
+
+                <tr class="table_row text-danger" data-toggle="modal" data-target="#<%=touch.id%>">
+                  <td><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-ok"></i></button></a></td>
+                  <td><%= touch.due_date.strftime("%B %e") %></td>
+                  <td><%= touch.contact.full_name %></td>
+                  <td><%= touch.description %></td>
+                </tr> 
+
+              <% else %>
+
+                <tr class="table_row" data-toggle="modal" data-target="#<%=touch.id%>" >
+                  <td><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-ok"></i></button></a></td>
+                  <td><%= touch.due_date.strftime("%B %e") %></td>
+                  <td><%= touch.contact.full_name %></td>
+                  <td><%= touch.description %></td>
+                </tr>
+
+              <% end %>
+              
+              <!-- Modal -->
+                  <div class="modal fade" id="<%=touch.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                      <div class="col-sm-4 col-sm-offset-4">
+                        <h3>
+                          Edit this touchPOINT for <%= touch.contact.full_name %>
+                        </h3>
+                        <hr>
+
+                        <%= form_for [@user, touch], html: { class: 'form' } do |f| %>
+                          <div class="form-group">
+                            <%= f.label "Description" %>    
+                            <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Due Date" %>
+                            <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Repeats?" %>
+                            <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], class: 'form-control' %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Notes" %>
+                            <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Done?" %>
+                            <%= f.check_box :is_complete, class: 'form-control' %>
+                          </div>
+                        
+                      </div>
+
+                    </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <%= f.submit "Update", class: 'btn btn-primary btn-large' %>
+                        </div>
+                        <% end %>
+                      </div>
+                    </div>
+                </div>
+              <!-- end of modal -->
+
+            <% end %>
         </table>
       </div>
 
@@ -28,31 +95,9 @@
 
 </div>
 
-
-
-
-
-
-  <table>
-    <tr><th>Name</th><th>Contact ID</th><th>User ID</th><th>Due Date</th><th>Repeats</th><th>Complete?</th><th>Touch ID</th><th>Edit</th><th>Delete</th></tr>
-  <% @touches.each do |touch| %>
-      <tr>
-        <td><strong><%= touch.contact.full_name %></strong> <%= link_to "view contact", contact_path(touch.contact_id) %></td>
-        <td><%= touch.description %></td>
-        <td><%= touch.contact_id %></td>
-        <td><%= touch.user_id %></td>
-        <td><%= touch.due_date.strftime("%B %e, %Y") %></td>
-        <td><%= touch.recurrence if touch.recurrence %></td>
-        <td><%= touch.is_complete %></td>
-        <td><%= touch.id %></td>
-        <td><%= link_to "Edit this touchPOINT", edit_user_touch_path(current_user.id, touch.id) %></td>
-        <td><%= link_to "Delete this touchPOINT", user_touch_path(current_user.id, touch.id), method: :delete, data: {confirm: "Are you sure you want to delete this touchPOINT?"} %></td>
-      </tr>
-    
-  <% end %>
-  </table>
-
   <%= link_to "Add a new touchPOINT", new_user_touch_path(current_user.id) %>
   <%= link_to "Add a new contact", new_contact_path %>
 
 </div>
+
+      

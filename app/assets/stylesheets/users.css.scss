@@ -2,7 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+
 #date_num {
   font-size: 150px;
   font-weight: lighter;
+}
+
+.table_row {
+  cursor: pointer;
 }
