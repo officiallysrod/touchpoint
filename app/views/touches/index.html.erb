@@ -4,7 +4,6 @@
   <% @touches.each do |t| %>
     <li><%= t.due_date %></li>
     <ul>
-      <li><%= t.kind %></li>
       <li><%= t.id %></li>
       <li><%= link_to "Delete this touchpoint", contact_touch_path(@contact.id, t.id), method: :delete %></li>
     </ul>

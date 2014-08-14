@@ -18,7 +18,7 @@
               <% if touch.due_date < Date.today %>
 
                 <tr class="table_row text-danger" data-toggle="modal" data-target="#<%=touch.id%>">
-                  <td><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-ok"></i></button></a></td>
+                  <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
                   <td><%= touch.due_date.strftime("%B %e") %></td>
                   <td><%= touch.contact.full_name %></td>
                   <td><%= touch.description %></td>
@@ -27,7 +27,7 @@
               <% else %>
 
                 <tr class="table_row" data-toggle="modal" data-target="#<%=touch.id%>" >
-                  <td><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-ok"></i></button></a></td>
+                  <td class="complete-col"><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"></button></a></td>
                   <td><%= touch.due_date.strftime("%B %e") %></td>
                   <td><%= touch.contact.full_name %></td>
                   <td><%= touch.description %></td>
@@ -36,64 +36,60 @@
               <% end %>
               
               <!-- Modal -->
-                  <div class="modal fade" id="<%=touch.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-
-                      <div class="col-sm-4 col-sm-offset-4">
-                        <h3>
-                          Edit this touchPOINT for <%= touch.contact.full_name %>
-                        </h3>
-                        <hr>
-
-                        <%= form_for [@user, touch], html: { class: 'form' } do |f| %>
-                          <div class="form-group">
-                            <%= f.label "Description" %>    
-                            <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
-                          </div>
-                          <div class="form-group">
-                            <%= f.label "Due Date" %>
-                            <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
-                          </div>
-                          <div class="form-group">
-                            <%= f.label "Repeats?" %>
-                            <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], class: 'form-control' %>
-                          </div>
-                          <div class="form-group">
-                            <%= f.label "Notes" %>
-                            <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
-                          </div>
-                          <div class="form-group">
-                            <%= f.label "Done?" %>
-                            <%= f.check_box :is_complete, class: 'form-control' %>
-                          </div>
-                        
-                      </div>
-
+              <div class="modal fade" id="<%=touch.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Edit this touchPOINT for <%= touch.contact.full_name %></h4>
                     </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <%= f.submit "Update", class: 'btn btn-primary btn-large' %>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                          <%= form_for [@user, touch], html: { class: 'form' } do |f| %>
+                          <form class="form" role="form">
+                            <div class="form-group">
+                              <%= f.label "Description" %>    
+                              <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
+                            </div>
+                            <div class="form-group">
+                              <%= f.label "Due Date" %>
+                              <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
+                            </div>
+                            <div class="form-group">
+                              <%= f.label "Repeats?" %>
+                              <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], class: 'form-control' %>
+                            </div>
+                            <div class="form-group">
+                              <%= f.label "Notes" %>
+                              <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
+                            </div>
+                            <div class="form-group">
+                              <%= f.label :is_complete, class: 'input-group' do %>
+                                <%= f.check_box :is_complete %>
+                                Done?
+                              <% end %>
+                            </div>
                         </div>
-                        <% end %>
                       </div>
+                      <div class="modal-footer">
+                        <a data-method="delete" href="/users/<%= @user.id %>/touches/<%= touch.id %>" rel="nofollow"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></button></a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <%= f.submit "Update", class: 'btn btn-primary btn-large' %>
+                        </form>
+                      </div>
+                      <% end %>
                     </div>
+                  </div>
                 </div>
+              </div>
               <!-- end of modal -->
 
-            <% end %>
+          <% end %>
         </table>
       </div>
-
     </div>
-
-</div>
+  </div>
 
   <%= link_to "Add a new touchPOINT", new_user_touch_path(current_user.id) %>
   <%= link_to "Add a new contact", new_contact_path %>

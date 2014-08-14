@@ -14,16 +14,6 @@ class UsersController < ApplicationController
       redirect_to new_session_path
     end
 
-    def dashboard_touches
-      @touches = []
-      @user.touches.each do |t|
-        unless t.is_complete
-          @touches.push(t) if t.due_date <= Date.today.end_of_week
-        end
-      end
-      @touches.sort_by!{|t| t.due_date}
-    end
-
     dashboard_touches
   end
 
@@ -62,12 +52,23 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  private
+private
 
-    def verify_user
-      @user = User.find(params[:id])
-      unless @user == current_user
-        redirect_to user_path
+  def verify_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path
+    end
+  end
+
+  def dashboard_touches
+    @touches = []
+    @user.touches.each do |t|
+      unless t.is_complete
+        @touches.push(t) if t.due_date <= Date.today.end_of_week
       end
     end
+    @touches.sort_by!{|t| t.due_date}
+  end
+  
 end

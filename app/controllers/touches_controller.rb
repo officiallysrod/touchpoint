@@ -44,8 +44,8 @@ class TouchesController < ApplicationController
   def update
     @user = current_user
     @touch = @user.touches.where(_id: params[:id]).first
-    if @touch.update_attributes(params.require(:touch).permit(:kind, :recurrence, :due_date, :is_complete))
-      @touch.make_copy if @touch.is_complete
+    if @touch.update_attributes(params.require(:touch).permit(:description, :notes, :recurrence, :due_date, :is_complete))
+      @touch.make_copy if @touch.is_complete && @touch.recurrence != "Never"
       redirect_to user_path(current_user.id)
     else
       render 'edit'
@@ -58,6 +58,18 @@ class TouchesController < ApplicationController
     @touch = Touch.find(params[:id])
     @touch.destroy
     redirect_to user_path(current_user.id)
+  end
+
+  def mark_complete
+    @user = current_user
+    @touch = @user.touches.where(_id: params[:id]).first
+    @touch.is_complete = true
+    if @touch.update_attributes
+      @touch.make_copy if @touch.is_complete && @touch.recurrence != "Never"
+      redirect_to user_path(current_user.id)
+    else
+      redirect_to :back
+    end
   end
 
   private

@@ -3,12 +3,6 @@ Rails.application.routes.draw do
   get 'api/' => 'users#test'
 
   resource :session, only: [:new, :create, :destroy]
-  
-  # resources :users
-
-  # resources :contacts
-
-  # resources :touches
 
   resources :users, only: [:show, :new, :create, :edit, :update] do
     resources :touches
@@ -18,6 +12,8 @@ Rails.application.routes.draw do
     resources :touches
   end
   
+  patch 'touches/:id' => 'touches#mark_complete'
+
 #============================================
 
   # The priority is based upon order of creation: first created -> highest priority.
