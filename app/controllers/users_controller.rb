@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @contacts = @user.contacts.all
+    @touch = Touch.new
 
     if @user == current_user
       @user

@@ -21,18 +21,15 @@
 
 .week_of {
   margin-top: 30px;
-  margin-left: -60px;
 }
-
-// #date_num {
-//   font-size: 150px;
-//   font-weight: lighter;
-// }
-
-// #current_date {
-//   font-weight: lighter;
-// }
 
 .table_row {
   cursor: pointer;
+}
+
+.form_styles {
+  border: 1px solid #e7e7e7;
+  border-radius: 15px;
+  margin-top: 20px;
+  padding: 10px;
 }
