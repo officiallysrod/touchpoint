@@ -2,12 +2,36 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
-#date_num {
-  font-size: 150px;
+.lighter_font {
   font-weight: lighter;
 }
+
+.date_header {
+  margin-top: -25px;
+
+  h1 {
+    font-size: 150px;
+    margin-left: -15px;
+  }
+
+  h3 {
+    margin-top: -25px;
+  }
+}
+
+.week_of {
+  margin-top: 30px;
+  margin-left: -60px;
+}
+
+// #date_num {
+//   font-size: 150px;
+//   font-weight: lighter;
+// }
+
+// #current_date {
+//   font-weight: lighter;
+// }
 
 .table_row {
   cursor: pointer;

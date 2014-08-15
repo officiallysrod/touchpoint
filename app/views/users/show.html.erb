@@ -1,9 +1,11 @@
 <div class="container">
   <div class="row">
-      
-    <div class="col-sm-8 offset col-sm-offset-2">
-      <h1 id="date_num"><%=Date.today.day%></h1>
-      <h3>Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h3>
+    <div class="col-sm-3 col-sm-offset-2 date_header">
+      <h1 class="lighter_font" id="date_num"><%=Date.today.day%></h1>
+      <h3 class="lighter_font"id="current_date"><%= Date.today.strftime("%B %e, %Y") %></h3>
+    </div>
+    <div class="col-sm-5 week_of">
+      <h1 class="lighter_font">Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
     </div>
 
   </div>
@@ -12,7 +14,7 @@
       
       <div class="table-responsive col-sm-8 col-sm-offset-2">
         <table class="table table-hover">
-          <tr><th></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
+          <tr><th><i class="glyphicon glyphicon-ok" id="checkmark"></i></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
             <% @touches.each do |touch| %>
 
               <% if touch.due_date < Date.today %>
@@ -27,7 +29,7 @@
               <% else %>
 
                 <tr class="table_row" data-toggle="modal" data-target="#<%=touch.id%>" >
-                  <td class="complete-col"><a href="https://www.google.com/?gws_rd=ssl"><button type="button" class="btn btn-default btn-circle"></button></a></td>
+                  <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
                   <td><%= touch.due_date.strftime("%B %e") %></td>
                   <td><%= touch.contact.full_name %></td>
                   <td><%= touch.description %></td>
