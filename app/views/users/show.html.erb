@@ -17,7 +17,7 @@
           <tr><th><i class="glyphicon glyphicon-ok" id="checkmark"></i></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
             <% @touches.each do |touch| %>
 
-              <% if touch.due_date < Time.now %>
+              <% if touch.due_date < Date.today %>
 
                 <tr class="table_row text-danger" data-toggle="modal" data-target="#<%=touch.id%>">
                   <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
