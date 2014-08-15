@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-3 col-sm-offset-2 date_header">
-      <h1 class="lighter_font" id="date_num"><%=Date.today.day%></h1>
-      <h3 class="lighter_font"id="current_date"><%= Date.today.strftime("%B %e, %Y") %></h3>
+      <h1 class="lighter_font" id="date_num"><%=Time.now.day%></h1>
+      <h3 class="lighter_font"id="current_date"><%= Time.now.strftime("%B %e, %Y") %></h3>
     </div>
     <div class="col-sm-5 week_of">
       <h1 class="lighter_font">Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
@@ -17,7 +17,7 @@
           <tr><th><i class="glyphicon glyphicon-ok" id="checkmark"></i></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
             <% @touches.each do |touch| %>
 
-              <% if touch.due_date < Date.today %>
+              <% if touch.due_date < Time.now %>
 
                 <tr class="table_row text-danger" data-toggle="modal" data-target="#<%=touch.id%>">
                   <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
