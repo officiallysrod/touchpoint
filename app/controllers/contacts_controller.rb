@@ -46,7 +46,7 @@ class ContactsController < ApplicationController
   def update
     @contact = Contact.find(params[:id])
     if @contact.update_attributes(params.require(:contact).permit(:fname, :lname, :spouse, :email, :home_phone, :mobile_phone, :address, :twitter, :giving_level))
-      redirect_to contacts_path
+      redirect_to user_path(current_user.id) + "?tab=contacts"
     else
       render 'edit'
     end

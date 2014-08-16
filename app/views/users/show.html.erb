@@ -16,8 +16,12 @@
         
         <!-- Beginning of Nav tabs -->
         <ul class="nav nav-tabs lighter_font" role="tablist">
-          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">DASHBOARD</a></li>
-          <li><a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
+          <li class="active">
+            <a href="#dashboard" role="tab" data-toggle="tab">DASHBOARD</a>
+          </li>
+
+          <li class="<%= @tab == 'contacts' ? 'active' : '' %> ">
+            <a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
           <li><a href="#add_touch" role="tab" data-toggle="tab">NEW touchPOINT</a></li>
           <li><a href="#add_contact" role="tab" data-toggle="tab">NEW CONTACT</a></li>
         </ul>
@@ -111,13 +115,70 @@
           <div class="tab-pane active contacts" id="contacts">
             <div class="row">  
               <% @contacts.each do |contact| %>
+                <% @contact_test = contact %>
                 <div class="col-sm-4 contact_box">
-                  <div class="contact_info"><strong><%= contact.full_name %></strong><br>
+                  <div class="contact_info" data-toggle="modal" data-target="#<%=contact.id%>"><strong><%= contact.full_name %></strong><br>
                   <%= contact.email %></div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="<%=contact.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title text-center lighter_font" id="myModalLabel">Edit <%= contact.full_name %>'s record</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-sm-4 col-sm-offset-4">
+                            <%= form_for contact do |f| %>
+                              <div class="form-group">
+                                <%= f.text_field :fname, placeholder: "first name", class: 'form-control' %>
+                              </div>
+                              <div class="form-group">
+                                <%= f.text_field :lname, placeholder: "last name", class: 'form-control' %>
+                              </div>
+                              <div class="form-group">
+                                <%= f.text_field :spouse, placeholder: "spouse", class: 'form-control' %>
+                              </div>
+                              <div class="form-group">
+                                <%= f.text_field :email, placeholder: "email", class: 'form-control', type: 'email' %>
+                              </div>
+                              <div class="form-group">
+                                <%= f.text_field :home_phone, placeholder: "home phone", class: 'form-control', type: 'tel' %>
+                              </div>
+                              <div class="form-group">
+                                <%= f.text_field :mobile_phone, placeholder: "mobile phone", class: 'form-control', type: 'tel' %>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <a data-method="delete" href="/contacts/<%=contact.id %>" rel="nofollow"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></button></a>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <%= f.submit "Update", class: 'btn btn-primary btn-large' %>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- end of modal -->
+
+
               <% end %>
             </div>
           </div>
+              
+                
+
+
+
+
+            
+
+          
+
           <!-- End of Contacts -->
 
           <!-- Beginning of Add Touchpoint Form -->
