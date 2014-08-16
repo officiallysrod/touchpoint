@@ -9,11 +9,5 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.where(:id => session[:user_id]).first
   end
 
-  # around_filter :user_time_zone, :if => :current_user
-
-  # def user_time_zone(&block)
-  #   Time.use_zone(current_user.time_zone, &block)
-  # end
-
 end
 

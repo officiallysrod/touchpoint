@@ -55,7 +55,7 @@ class ContactsController < ApplicationController
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy
-    redirect_to contacts_path
+    redirect_to user_path(current_user.id)
   end
 
   private
