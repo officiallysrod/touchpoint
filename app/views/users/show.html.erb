@@ -16,16 +16,12 @@
         
         <!-- Beginning of Nav tabs -->
         <ul class="nav nav-tabs lighter_font" role="tablist">
-          <li class="active">
-            <a href="#dashboard" role="tab" data-toggle="tab">DASHBOARD</a>
-          </li>
-
-          <li class="<%= @tab == 'contacts' ? 'active' : '' %> ">
-            <a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
-          <li><a href="#add_touch" role="tab" data-toggle="tab">NEW touchPOINT</a></li>
-          <li><a href="#add_contact" role="tab" data-toggle="tab">NEW CONTACT</a></li>
+          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">touchPOINTS</a></li>
+          <li><a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
+          <li><a href="#add_touch" role="tab" data-toggle="tab">+ touchPOINT</a></li>
+          <li><a href="#add_contact" role="tab" data-toggle="tab">+ CONTACT</a></li>
         </ul>
-        <!-- End of nav tabs -->
+        <!-- End of Nav tabs -->
 
         <!-- Beginning of Tab panes -->
         <div class="tab-content">
@@ -39,7 +35,7 @@
                   <% if touch.due_date < Date.today %>
 
                     <tr class="table_row text-danger" data-toggle="modal" data-target="#<%=touch.id%>">
-                      <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
+                      <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><div type="button" class="btn btn-default btn-circle"></div></a></td>
                       <td><%= touch.due_date.strftime("%B %e") %></td>
                       <td><%= touch.contact.full_name %></td>
                       <td><%= touch.description %></td>
@@ -48,7 +44,7 @@
                   <% else %>
 
                     <tr class="table_row" data-toggle="modal" data-target="#<%=touch.id%>" >
-                      <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><button type="button" class="btn btn-default btn-circle"></button></a></td>
+                      <td class="complete-col"><a data-method="patch" href="/touches/<%=touch.id%>" rel="nofollow"><div type="button" class="btn btn-default btn-circle"></div></a></td>
                       <td><%= touch.due_date.strftime("%B %e") %></td>
                       <td><%= touch.contact.full_name %></td>
                       <td><%= touch.description %></td>
@@ -112,7 +108,7 @@
           <!-- End of Dashboard -->
 
           <!-- Beginning of Contacts -->
-          <div class="tab-pane active contacts" id="contacts">
+          <div class="tab-pane contacts" id="contacts">
             <div class="row">  
               <% @contacts.each do |contact| %>
                 <% @contact_test = contact %>
@@ -164,45 +160,31 @@
                   </div>
                 </div>
                 <!-- end of modal -->
-
-
               <% end %>
             </div>
           </div>
-              
-                
-
-
-
-
-            
-
-          
-
           <!-- End of Contacts -->
 
           <!-- Beginning of Add Touchpoint Form -->
           <div class="tab-pane col-sm-6 col-sm-offset-2 form_styles" id="add_touch">
             <%= form_for [@user, @touch], html: { class: 'form' } do |f| %>
-              <form class="form" role="form">
-                <div class="form-group">
-                  <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact", class: "form-control" %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.label "Due Date" %>
-                  <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], prompt: "Repeats?", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
-                </div>
-                <%= f.submit "add touchPOINT", class: 'btn btn-primary' %>
-              </form>
+              <div class="form-group">
+                <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact", class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label "Due Date" %>
+                <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], prompt: "Repeats?", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
+              </div>
+              <%= f.submit "add touchPOINT", class: 'btn btn-primary' %>
             <% end %>
           </div>
           <!-- End of Add Touchpoint Form -->
@@ -210,27 +192,25 @@
           <!-- Beginning of Add Contact Form -->
           <div class="tab-pane col-sm-6 col-sm-offset-2 form_styles" id="add_contact">
             <%= form_for [@contact], html: { class: 'form' } do |f| %>
-              <form class="form" role="form">
-                <div class="form-group">
-                  <%= f.text_field :fname, placeholder: "first name", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :lname, placeholder: "last name", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :spouse, placeholder: "spouse", class: 'form-control' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :email, placeholder: "email", class: 'form-control', type: 'email' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :home_phone, placeholder: "home phone", class: 'form-control', type: 'tel' %>
-                </div>
-                <div class="form-group">
-                  <%= f.text_field :mobile_phone, placeholder: "mobile phone", class: 'form-control', type: 'tel' %>
-                </div>
-                <%= f.submit "add contact", class: 'btn btn-primary' %>
-              </form>
+              <div class="form-group">
+                <%= f.text_field :fname, placeholder: "first name", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :lname, placeholder: "last name", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :spouse, placeholder: "spouse", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :email, placeholder: "email", class: 'form-control', type: 'email' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :home_phone, placeholder: "home phone", class: 'form-control', type: 'tel' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :mobile_phone, placeholder: "mobile phone", class: 'form-control', type: 'tel' %>
+              </div>
+              <%= f.submit "add contact", class: 'btn btn-primary' %>
             <% end %>
           </div>
           <!-- End of Add Contact Form -->
