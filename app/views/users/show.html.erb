@@ -1,32 +1,33 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-3 col-sm-offset-2 date_header">
+    <div class="col-lg-2 col-lg-offset-2 date_header">
       <h1 class="lighter_font" id="date_num"><%=Time.now.day%></h1>
-      <h3 class="lighter_font"id="current_date"><%= Time.now.strftime("%B %e, %Y") %></h3>
+      <h3 class="lighter_font"id="current_date"><%= Time.now.strftime("%b %e, %Y") %></h3>
     </div>
-    <div class="col-sm-5 week_of">
-      <h1 class="lighter_font">Your touchPOINTS for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
+    <div class="col-lg-5 week_of">
+      <h1 class="lighter_font">Your <span class="text-primary">touchPOINTS</span> for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
     </div>
 
   </div>
       
     <div class="row">
       
-      <div class="table-responsive col-sm-8 col-sm-offset-2">
+      <div class="table-responsive col-lg-8 col-lg-offset-2 main_content">
         
-        <!-- Nav tabs -->
+        <!-- Beginning of Nav tabs -->
         <ul class="nav nav-tabs lighter_font" role="tablist">
-          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">YOUR DASHBOARD</a></li>
+          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">DASHBOARD</a></li>
+          <li><a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
           <li><a href="#add_touch" role="tab" data-toggle="tab">NEW touchPOINT</a></li>
           <li><a href="#add_contact" role="tab" data-toggle="tab">NEW CONTACT</a></li>
         </ul>
         <!-- End of nav tabs -->
 
-        <!-- Tab panes -->
+        <!-- Beginning of Tab panes -->
         <div class="tab-content">
           
           <!-- Beginning of Dashboard -->
-          <div class="tab-pane active" id="dashboard">
+          <div class="tab-pane active dashboard" id="dashboard">
             <table class="table table-hover">
               <tr><th><i class="glyphicon glyphicon-ok" id="checkmark"></i></th><th>Due Date</th><th>Contact</th><th>Description</th></tr>
                 <% @touches.each do |touch| %>
@@ -106,16 +107,27 @@
           </div>
           <!-- End of Dashboard -->
 
+          <!-- Beginning of Contacts -->
+          <div class="tab-pane active contacts" id="contacts">
+            <div class="row">  
+              <% @contacts.each do |contact| %>
+                <div class="col-sm-4 contact_box">
+                  <div class="contact_info"><strong><%= contact.full_name %></strong><br>
+                  <%= contact.email %></div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <!-- End of Contacts -->
+
           <!-- Beginning of Add Touchpoint Form -->
           <div class="tab-pane col-sm-6 col-sm-offset-2 form_styles" id="add_touch">
             <%= form_for [@user, @touch], html: { class: 'form' } do |f| %>
               <form class="form" role="form">
                 <div class="form-group">
-                  <%= f.label "Contact:" %>
-                  <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Choose a contact", class: "form-control" %>
+                  <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact", class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Description:" %>
                   <%= f.text_field :description, placeholder: "description", class: 'form-control' %>
                 </div>
                 <div class="form-group">
@@ -123,20 +135,44 @@
                   <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Repeats?" %>
-                  <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], class: 'form-control' %>
+                  <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], prompt: "Repeats?", class: 'form-control' %>
                 </div>
                 <div class="form-group">
-                  <%= f.label "Notes" %>
                   <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
                 </div>
-                <a data-method="post" href="/users/<%= @user.id %>/touches %>" rel="nofollow"><button type="button" class="btn btn-primary">add touchPOINT</button></a>
+                <%= f.submit "add touchPOINT", class: 'btn btn-primary' %>
               </form>
             <% end %>
           </div>
           <!-- End of Add Touchpoint Form -->
 
-          <div class="tab-pane" id="add_contact">...</div>
+          <!-- Beginning of Add Contact Form -->
+          <div class="tab-pane col-sm-6 col-sm-offset-2 form_styles" id="add_contact">
+            <%= form_for [@contact], html: { class: 'form' } do |f| %>
+              <form class="form" role="form">
+                <div class="form-group">
+                  <%= f.text_field :fname, placeholder: "first name", class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_field :lname, placeholder: "last name", class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_field :spouse, placeholder: "spouse", class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_field :email, placeholder: "email", class: 'form-control', type: 'email' %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_field :home_phone, placeholder: "home phone", class: 'form-control', type: 'tel' %>
+                </div>
+                <div class="form-group">
+                  <%= f.text_field :mobile_phone, placeholder: "mobile phone", class: 'form-control', type: 'tel' %>
+                </div>
+                <%= f.submit "add contact", class: 'btn btn-primary' %>
+              </form>
+            <% end %>
+          </div>
+          <!-- End of Add Contact Form -->
         </div>
         <!-- End of tab panes -->
 

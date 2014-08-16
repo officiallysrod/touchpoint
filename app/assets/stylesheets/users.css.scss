@@ -7,7 +7,7 @@
 }
 
 .date_header {
-  margin-top: -25px;
+  margin-top: -45px;
 
   h1 {
     font-size: 150px;
@@ -19,8 +19,17 @@
   }
 }
 
-.week_of {
-  margin-top: 30px;
+.nav-tabs > li > a {
+  width: 155px;
+  text-align: center;
+}
+
+.main_content {
+  margin-top: 10px;
+}
+
+.dashboard {
+  margin-top: -1px;
 }
 
 .table_row {
@@ -33,3 +42,19 @@
   margin-top: 20px;
   padding: 10px;
 }
+
+.contacts {
+  margin-top: 20px;
+
+  .contact_box {
+    border: 1px solid #e7e7e7;
+    border-radius: 15px;
+    margin: 5px 5px;
+    padding: 10px;
+    width: 32%;
+  }
+    .contact_info {
+      padding: 20px;
+    }
+}
+

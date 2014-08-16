@@ -24,7 +24,7 @@ class TouchesController < ApplicationController
 
   def create
     @user = current_user
-    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :kind, :due_date, :recurrence, :notes, :is_complete))
+    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :due_date, :recurrence, :notes, :is_complete))
     @touch.user = current_user
     
     if @touch.save

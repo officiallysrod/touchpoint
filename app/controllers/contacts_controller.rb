@@ -33,7 +33,7 @@ class ContactsController < ApplicationController
     @contact = current_user.contacts.create(params.require(:contact).permit(:fname, :lname, :spouse, :email, :home_phone, :mobile_phone, :address, :twitter, :giving_level))
 
     if @contact.save
-      redirect_to contacts_path
+      redirect_to user_path(current_user.id)
     else
       render 'new'
     end

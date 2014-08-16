@@ -4,8 +4,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @contacts = @user.contacts.all
+    @contacts = @user.contacts.all.sort_by!{|c| c.lname}
     @touch = Touch.new
+    @contact = Contact.new
 
     if @user == current_user
       @user
