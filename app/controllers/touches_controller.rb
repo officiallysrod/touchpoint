@@ -25,7 +25,7 @@ class TouchesController < ApplicationController
   def create
     @user = current_user
     @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
-    @touch = Touch.new(params.require(:touch).permit(:contact, :description, :due_date, :recurrence, :notes, :is_complete))
+    @touch = Touch.new(touch_params)
     @touch.user = current_user
     
     if @touch.save
@@ -47,7 +47,7 @@ class TouchesController < ApplicationController
     @touch = @user.touches.where(_id: params[:id]).first
     @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
 
-    if @touch.update_attributes(params.require(:touch).permit(:description, :notes, :recurrence, :due_date, :is_complete))
+    if @touch.update_attributes(touch_params)
       @touch.make_copy if @touch.is_complete && @touch.recurrence != "Never"
       redirect_to user_path(current_user.id)
     else
@@ -75,24 +75,28 @@ class TouchesController < ApplicationController
     end
   end
 
-  private
+private
 
-    def verify_user
-      if current_user
-        @user = User.where(params[:id])
-        unless @user == current_user
-          redirect_to user_path(current_user.id)
-        end
-      else
-        redirect_to new_session_path
+  def touch_params
+    params.require(:touch).permit(:contact, :description, :due_date, :recurrence, :notes, :is_complete)
+  end
+
+  def verify_user
+    if current_user
+      @user = User.where(params[:id])
+      unless @user == current_user
+        redirect_to user_path(current_user.id)
       end
+    else
+      redirect_to new_session_path
     end
+  end
 
-    # def verify_user
-    #   @contact = Contact.find(params[:contact_id])
-    #   unless @contact.user == current_user
-    #     redirect_to contacts_path
-    #   end
-    # end
+  # def verify_user
+  #   @contact = Contact.find(params[:contact_id])
+  #   unless @contact.user == current_user
+  #     redirect_to contacts_path
+  #   end
+  # end
 
 end

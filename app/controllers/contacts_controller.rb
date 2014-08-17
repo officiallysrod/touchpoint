@@ -30,7 +30,7 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = current_user.contacts.create(params.require(:contact).permit(:fname, :lname, :spouse, :email, :home_phone, :mobile_phone, :address, :twitter, :giving_level))
+    @contact = current_user.contacts.create(contact_params)
 
     if @contact.save
       redirect_to user_path(current_user.id)
@@ -45,7 +45,7 @@ class ContactsController < ApplicationController
 
   def update
     @contact = Contact.find(params[:id])
-    if @contact.update_attributes(params.require(:contact).permit(:fname, :lname, :spouse, :email, :home_phone, :mobile_phone, :address, :twitter, :giving_level))
+    if @contact.update_attributes(contact_params)
       redirect_to user_path(current_user.id)
     else
       render 'edit'
@@ -58,12 +58,16 @@ class ContactsController < ApplicationController
     redirect_to user_path(current_user.id)
   end
 
-  private
+private
 
-    def verify_user
-      @contact = Contact.find(params[:id])
-      unless @contact.user == current_user
-        redirect_to contacts_path
-      end
+  def contact_params
+    params.require(:contact).permit(:fname, :lname, :spouse, :email, :home_phone, :mobile_phone, :address, :giving_level)
+  end
+
+  def verify_user
+    @contact = Contact.find(params[:id])
+    unless @contact.user == current_user
+      redirect_to contacts_path
     end
+  end
 end
