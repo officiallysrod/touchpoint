@@ -20,8 +20,8 @@
         <ul class="nav nav-tabs lighter_font" role="tablist">
           <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">touchPOINTS</a></li>
           <li><a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
-          <li><a href="#add_touch" role="tab" data-toggle="tab">+ touchPOINT</a></li>
-          <li><a href="#add_contact" role="tab" data-toggle="tab">+ CONTACT</a></li>
+          <li class="cursor_pointer"><a data-toggle="modal" data-target="#add_touch">+ touchPOINT</a></li>
+          <li class="cursor_pointer"><a data-toggle="modal" data-target="#add_contact">+ CONTACT</a></li>
         </ul>
         <!-- End of Nav tabs -->
 
@@ -182,15 +182,11 @@
           <!-- End of Contacts -->
 
           <!-- Beginning of Add Touchpoint Form -->
-          <div class="tab-pane" id="add_touch">
-            <%= render 'touches/touchform' %>
-          </div>
+            <%= render 'touches/touchmodal' %>
           <!-- End of Add Touchpoint Form -->
 
           <!-- Beginning of Add Contact Form -->
-          <div class="tab-pane" id="add_contact">
-            <%= render 'contacts/contactform' %>
-          </div>
+            <%= render 'contacts/contactmodal' %>
           <!-- End of Add Contact Form -->
         </div>
         <!-- End of tab panes -->
