@@ -1,0 +1,25 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.welcome_msg {
+  opacity: 0.8;
+  margin-top: 100px;
+  padding-bottom: 25px;
+
+  h1, h3 {
+    padding-left: 25px;
+  }
+
+  h3 {
+    margin-top: -10px;
+  }
+}
+
+.action_buttons {
+  padding: 20px 5px 0px 5px;
+
+  a {
+    border: 1px solid #e7e7e7;
+  }
+}

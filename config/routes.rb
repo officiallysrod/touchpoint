@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'welcome/index'
+
+  get 'welcomes/index'
+
   get 'api/' => 'users#test'
 
   resource :session, only: [:new, :create, :destroy]
@@ -14,13 +18,15 @@ Rails.application.routes.draw do
   
   patch 'touches/:id' => 'touches#mark_complete'
 
+  root 'welcome#index'
+
 #============================================
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

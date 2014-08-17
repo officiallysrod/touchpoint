@@ -1,15 +1,15 @@
 <div class="container">
   
   <!-- beginning of page header -->
-  <div class="row">
-    <div class="col-lg-2 col-lg-offset-2 date_header">
-      <h1 class="lighter_font" id="date_num"><%=Time.now.day%></h1>
-      <h3 class="lighter_font"id="current_date"><%= Time.now.strftime("%b %e, %Y") %></h3>
+    <div class="row">
+      <div class="col-lg-2 col-lg-offset-2 date_header">
+        <h1 class="lighter_font" id="date_num"><%=Time.now.day%></h1>
+        <h3 class="lighter_font"id="current_date"><%= Time.now.strftime("%b %e, %Y") %></h3>
+      </div>
+      <div class="col-lg-5 week_of">
+        <h1 class="lighter_font">Your <span class="text-primary">touchPOINTS</span> for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
+      </div>
     </div>
-    <div class="col-lg-5 week_of">
-      <h1 class="lighter_font">Your <span class="text-primary">touchPOINTS</span> for the week of <%= Time.now.beginning_of_week.strftime("%B %e") %> - <%= Time.now.end_of_week.strftime("%e, %Y")%></h1>
-    </div>
-  </div>
   <!-- end of page header -->
     
     <!-- beginning of main content -->  
@@ -18,7 +18,8 @@
         
         <!-- Beginning of Nav tabs -->
         <ul class="nav nav-tabs lighter_font" role="tablist">
-          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">touchPOINTS</a></li>
+          <li class="active"><a href="#dashboard" role="tab" data-toggle="tab">
+            <span class="badge pull-right"><%= @touches.length %></span>touchPOINTS</a></li>
           <li><a href="#contacts" role="tab" data-toggle="tab">CONTACTS</a></li>
           <li class="cursor_pointer"><a data-toggle="modal" data-target="#add_touch">+ touchPOINT</a></li>
           <li class="cursor_pointer"><a data-toggle="modal" data-target="#add_contact">+ CONTACT</a></li>
