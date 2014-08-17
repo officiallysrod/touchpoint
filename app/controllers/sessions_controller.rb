@@ -5,13 +5,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    u = User.where(email: params[:user][:email]).first
+    @user = User.new
+    u = User.where(email: params[:user][:email].downcase).first
 
     if u && u.authenticate(params[:user][:password])
       session[:user_id] = u.id.to_s
       redirect_to user_path(current_user.id)
     else
-      redirect_to new_session_path
+      flash.now[:error] = "Your email or password is incorrect."
+      render 'new'
     end
   end
 

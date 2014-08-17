@@ -10,16 +10,17 @@
           
       <%= form_for @user, {url: session_path, method: :post} do |f| %>
 
-        <% if @user.errors.any? %>
+        <% if flash[:error] %>
+
           <div id="error_explanation">
             
             <ul class="list-group">
-              <% @user.errors.full_messages.each do |msg| %>
-                <li class="list-group-item list-group-item-danger"><%= msg %></li>
-              <% end %>
+              <li class="list-group-item list-group-item-danger"><%= flash[:error] %></li>
             </ul>
           </div>
+
         <% end %>
+
 
         <div class="form-group">
           <%= f.text_field :email, placeholder: "email address", class: 'form-control', type: 'email' %>
