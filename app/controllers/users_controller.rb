@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params.require(:user).permit(:fname, :lname, :email, :password, :password_confirmation))
+    @user = User.new(user_params)
     
     if @user.save
       session[:user_id] = @user.id.to_s
@@ -36,12 +36,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.where(params[:id])
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.where(params[:id])
-    if @user.update_attributes(params.require(:user).permit(:fname, :lname, :email))
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
       redirect_to user_path
     else
       render 'edit'
@@ -55,6 +55,10 @@ class UsersController < ApplicationController
   end
 
 private
+
+  def user_params
+    params.require(:user).permit(:fname, :lname, :email, :password, :password_confirmation)
+  end
 
   def verify_user
     @user = User.find(params[:id])

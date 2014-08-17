@@ -14,6 +14,9 @@ class User
   validates_presence_of :fname
   validates_presence_of :lname
   
+  before_save { self.email = email.downcase }
+  before_save { self.fname = fname.titleize }
+  before_save { self.lname = lname.titleize }
 
   has_many :contacts
   has_many :touches
