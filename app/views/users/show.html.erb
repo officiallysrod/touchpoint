@@ -127,14 +127,23 @@
           <!-- Beginning of Contacts -->
           <div class="tab-pane contacts" id="contacts">
             <div class="row">  
-              <% @contacts.each do |contact| %>
-                <% @contact_test = contact %>
-                <div class="col-sm-4 contact_box">
-                  <div class="contact_info" data-toggle="modal" data-target="#<%=contact.id%>"><strong><%= contact.full_name %></strong><br>
-                  <%= contact.email %></div>
-                </div>
+              
+              <% if @contacts.length < 1 %>
 
-                <!-- Modal -->
+                <h1 class="text-center">Hi, <%= current_user.fname %>!</h1>
+                <h1 class="text-center">You don't have any contacts yet.</h1>
+                <h2 class="text-center"><small>Get started by adding a new contact.</small></h2>
+
+              <% else %>
+
+                <% @contacts.each do |contact| %>
+                  <% @contact_test = contact %>
+                  <div class="col-sm-4 contact_box">
+                    <div class="contact_info" data-toggle="modal" data-target="#<%=contact.id%>"><strong><%= contact.full_name %></strong><br>
+                    <%= contact.email %></div>
+                  </div>
+
+              <!-- Modal -->
                 <div class="modal fade" id="<%=contact.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -177,6 +186,7 @@
                   </div>
                 </div>
                 <!-- end of modal -->
+                <% end %>
               <% end %>
             </div>
           </div>
