@@ -10,7 +10,7 @@ class Contact
   field :giving_level, type: String
 
   belongs_to :user
-  has_many :touches
+  has_many :touches, dependent: :destroy #when contact is destroyed, all associated touches are also destroyed
 
   validates_presence_of :fname
   validates_presence_of :lname

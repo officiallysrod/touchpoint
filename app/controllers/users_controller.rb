@@ -67,6 +67,8 @@ private
     end
   end
 
+  #finds all the user touchpoints that should be displayed
+  #on the current week's dashboard.
   def dashboard_touches
     @touches = []
     @user.touches.each do |t|

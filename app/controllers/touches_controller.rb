@@ -61,6 +61,9 @@ class TouchesController < ApplicationController
     redirect_to user_path(current_user.id)
   end
 
+  #called in the user show view when a user clicks 
+  #the button to mark a touchpoint as complete.
+  #if a repeat is set on the touchpoint, then a new touchpoint will be created.
   def mark_complete
     @user = current_user
     @touch = @user.touches.where(_id: params[:id]).first
@@ -89,12 +92,5 @@ private
       redirect_to root_path
     end
   end
-
-  # def verify_user
-  #   @contact = Contact.find(params[:contact_id])
-  #   unless @contact.user == current_user
-  #     redirect_to contacts_path
-  #   end
-  # end
 
 end

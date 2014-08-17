@@ -108,7 +108,9 @@
                             </div>
                             <div class="modal-footer">
                               <a data-method="delete" href="/users/<%= @user.id %>/touches/<%= touch.id %>" rel="nofollow"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></button></a>
+
                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              
                               <%= f.submit "Update", class: 'btn btn-primary btn-large' %>
                             </div>
                             <% end %>

@@ -14,6 +14,9 @@ class Touch
   validates_presence_of :due_date
   validates_presence_of :recurrence
   
+  #called when a touch is marked as complete, but only if recurrence != "Never".
+  #makes a new instance of the touch with the same attribute values as the original
+  #touch and increments the date by the appropriate amoutn.
   def make_copy
     new_touch = Touch.new
     new_touch.description = self.description
