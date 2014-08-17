@@ -1,20 +1,16 @@
 Rails.application.routes.draw do
 
-  get 'welcome/index'
-
-  get 'welcomes/index'
-
-  get 'api/' => 'users#test'
-
   resource :session, only: [:new, :create, :destroy]
 
   resources :users, only: [:show, :new, :create, :edit, :update] do
-    resources :touches, only: [:show, :new, :create, :edit, :update, :destroy]
+    resources :touches, only: [:new, :create, :edit, :update, :destroy]
   end
 
-  resources :contacts do
-    resources :touches
-  end
+  resources :contacts, only: [:new, :create, :edit, :update, :destroy]  
+
+  # resources :contacts, only: [:new, :create, :edit, :update, :destroy] do
+  #   resources :touches, only: [:new, :create, :edit, :update, :destroy]
+  # end
   
   patch 'touches/:id' => 'touches#mark_complete'
 

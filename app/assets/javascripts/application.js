@@ -16,19 +16,6 @@
 //= require bootstrap
 //= require_tree .
 
-// var AngularApp = angular.module('AngularApp', []);
-
-//   AngularApp.controller("dashboardCtrl", function($scope, $http) {
-
-//     $scope.dashboard = function() {
-//       console.log("Test");
-//       var dash_data = $http.get("http://localhost:3000/api/").success(function(data, status, headers, config) {
-//         $scope.dash_data = dash_data;
-//       })
-//     }
-
-//   });
-
 jQuery(function($) {
   $("tr[data-link]").click(function() {
     window.location = this.dataset.link
