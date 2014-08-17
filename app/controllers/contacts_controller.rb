@@ -1,13 +1,9 @@
 class ContactsController < ApplicationController
   
-  before_action :verify_user, only: [:edit, :update, :destroy]
+  before_action :verify_user, only: [:index, :edit, :update, :destroy]
 
   def index
-    if current_user
-      @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
-    else
-      redirect_to new_session_path
-    end
+    @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
   end
 
   def show
@@ -66,8 +62,13 @@ private
 
   def verify_user
     @contact = Contact.find(params[:id])
-    unless @contact.user == current_user
-      redirect_to contacts_path
+    
+    if current_user
+      unless @contact.user == current_user
+        redirect_to user_path(current_user.id)
+      end
+    else
+      redirect_to root_path
     end
   end
 end

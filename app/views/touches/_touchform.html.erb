@@ -14,9 +14,11 @@
         </div>
       <% end %>
 
-      <div class="form-group">
-        <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact (required)", class: "form-control" %>
-      </div>
+      <% if @touch.id == nil %>
+        <div class="form-group">
+          <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact (required)", class: "form-control" %>
+        </div>
+      <% end %>
       <div class="form-group">
         <%= f.text_field :description, placeholder: "description (required)", class: 'form-control' %>
       </div>

@@ -2,7 +2,6 @@ class TouchesController < ApplicationController
   
   # before_action :verify_user, only: [:index, :show, :edit, :update, :destroy]
 
-
   def index
     @contact = Contact.find(params[:contact_id])
     @touches = @contact.touches.all
@@ -57,7 +56,6 @@ class TouchesController < ApplicationController
 
   def destroy
     @user = current_user
-    # @contact = Contact.find(params[:contact_id])
     @touch = Touch.find(params[:id])
     @touch.destroy
     redirect_to user_path(current_user.id)
@@ -88,7 +86,7 @@ private
         redirect_to user_path(current_user.id)
       end
     else
-      redirect_to new_session_path
+      redirect_to root_path
     end
   end
 
