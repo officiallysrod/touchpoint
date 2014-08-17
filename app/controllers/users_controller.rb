@@ -7,8 +7,7 @@ class UsersController < ApplicationController
     @contacts = @user.contacts.all.sort_by!{|c| c.lname}
     @touch = Touch.new
     @contact = Contact.new
-    @tab = params["tab"]
-
+    
     if @user == current_user
       @user
     elsif current_user

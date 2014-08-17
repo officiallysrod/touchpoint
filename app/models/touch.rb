@@ -1,7 +1,6 @@
 class Touch
   include Mongoid::Document
   field :description, type: String
-  # field :kind, type: String
   field :due_date, type: Date
   field :recurrence, type: String
   field :notes, type: String
@@ -10,10 +9,14 @@ class Touch
   belongs_to :user
   belongs_to :contact
 
+  validates_presence_of :contact
+  validates_presence_of :description
+  validates_presence_of :due_date
+  validates_presence_of :recurrence
+  
   def make_copy
     new_touch = Touch.new
     new_touch.description = self.description
-    # new_touch.kind = self.kind
     new_touch.recurrence = self.recurrence
     new_touch.notes = self.notes
     new_touch.user_id = self.user_id

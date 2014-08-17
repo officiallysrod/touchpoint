@@ -1,0 +1,52 @@
+<!-- Modal -->
+<div class="modal fade" id="add_touch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title text-center lighter_font" id="myModalLabel">Create a new touchPOINT</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <%= form_for [@user, @touch], html: { class: 'form' } do |f| %>
+
+              <% if @touch.errors.any? %>
+                <div id="error_explanation">
+                  
+                  <ul class="list-group">
+                    <% @touch.errors.full_messages.each do |msg| %>
+                      <li class="list-group-item list-group-item-danger"><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact (required)", class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :description, placeholder: "description (required)", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label "Due Date (required)" %>
+                <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], prompt: "Repeats?", class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= f.submit "Create", class: 'btn btn-primary btn-large' %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of modal -->

@@ -24,6 +24,7 @@ class TouchesController < ApplicationController
 
   def create
     @user = current_user
+    @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
     @touch = Touch.new(params.require(:touch).permit(:contact, :description, :due_date, :recurrence, :notes, :is_complete))
     @touch.user = current_user
     
@@ -44,6 +45,8 @@ class TouchesController < ApplicationController
   def update
     @user = current_user
     @touch = @user.touches.where(_id: params[:id]).first
+    @contacts = current_user.contacts.all.sort_by!{|c| c.lname}
+
     if @touch.update_attributes(params.require(:touch).permit(:description, :notes, :recurrence, :due_date, :is_complete))
       @touch.make_copy if @touch.is_complete && @touch.recurrence != "Never"
       redirect_to user_path(current_user.id)

@@ -12,6 +12,10 @@ class Contact
   belongs_to :user
   has_many :touches
 
+  validates_presence_of :fname
+  validates_presence_of :lname
+  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create
+
   def full_name
     "#{fname} #{lname}"
   end

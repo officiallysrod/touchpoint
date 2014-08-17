@@ -1,10 +1,11 @@
-<h1>Create a new touchPOINT!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1 class="lighter_font text-center">Create a new <span class="text-primary">touchPOINT</span></h1>
+    </div>
 
-<%= form_for [@user, @touch] do |f| %>
-  <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Choose a contact" %>
-  <%= f.text_field :description, placeholder: "description" %>
-  <%= f.date_field :due_date, placeholder: "due date" %>
-  <%= f.select :recurrence, options_for_select(["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"]), prompt: "Repeats?" %>
-  <%= f.text_field :notes, placeholder: "notes" %>
-  <%= f.submit "Submit!" %>
-<% end %>
+    <div class="col-sm-10 col-sm-offset-1">
+      <%= render 'touchform' %>
+    </div>    
+  </div>
+</div>

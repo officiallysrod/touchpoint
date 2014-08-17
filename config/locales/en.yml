@@ -25,3 +25,8 @@ en:
       user:
         fname: "First name"
         lname: "Last name"
+      contact:
+        fname: "First name"
+        lname: "Last name"
+      touch:
+        recurrence: "Repeats?"

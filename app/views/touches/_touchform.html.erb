@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 form_styles">
+        
+    <%= form_for [@user, @touch], html: { class: 'form' } do |f| %>
+
+      <% if @touch.errors.any? %>
+        <div id="error_explanation">
+          
+          <ul class="list-group">
+            <% @touch.errors.full_messages.each do |msg| %>
+              <li class="list-group-item list-group-item-danger"><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact (required)", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :description, placeholder: "description (required)", class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label "Due Date (required)" %>
+        <%= f.date_field :due_date, placeholder: "due date", class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.select :recurrence, ["Never", "Every Day", "Every Week", "Every 2 Weeks", "Every Month", "Every Year"], prompt: "Repeats?", class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :notes, placeholder: "notes", class: 'form-control' %>
+      </div>
+      <div class="checkbox">
+        <%= f.label :is_complete, class: 'input-group' do %>
+          <%= f.check_box :is_complete %>
+          Done?
+        <% end %>
+      </div>
+      <%= link_to "Cancel", user_path(current_user.id), class: 'btn btn-default' %>
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
