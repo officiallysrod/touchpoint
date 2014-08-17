@@ -14,7 +14,7 @@
         </div>
       <% end %>
 
-      <% if @touch.id == nil %>
+      <% if @touch.contact == nil %>
         <div class="form-group">
           <%= f.collection_select :contact, @contacts, :id, :lname_fname, prompt: "Select a contact (required)", class: "form-control" %>
         </div>
