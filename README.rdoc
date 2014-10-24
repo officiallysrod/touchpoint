@@ -1,28 +1,7 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+touchPOINT is a web app for managing contact-based reminders. For those who are responsible for managing a portfolio of relationships, touchPOINT gives users a clean, easy-to-use interface for creating and keeping track of reminders associated with their contacts.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+touchPOINT was created during the Web Development Immersive Program at General Assembly. It is built with Ruby on Rails and MongoDB.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
